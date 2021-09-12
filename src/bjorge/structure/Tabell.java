@@ -64,5 +64,124 @@ public class Tabell     // Samleklasse for tabellmetoder
     }
 
     // min-metodene - se Oppgave 1 i Avsnitt 1.2.1
+    public static int minHalvaapentI(int[] a, int fra, int til)
+    {
+        if (fra < 0 || til > a.length || fra >= til)
+        {
+            throw new IllegalArgumentException("Illegalt intervall!");
+        }
+
+        int m = fra;              // indeks til minste verdi i a[fra:til>
+        int minverdi = a[fra];   // minste verdi i a[fra:til>
+
+        for (int i = fra + 1; i < til; i++)
+        {
+            if (a[i] < minverdi)
+            {
+                m = i;                // indeks til minste verdi oppdateres
+                minverdi = a[m];     // minste verdi oppdateres
+            }
+        }
+
+        return m;  // posisjonen til største verdi i a[fra:til>
+    }
+
+    public static int minTabell(int[] a)  // bruker hele tabellen
+    {
+        return minHalvaapentI(a,0,a.length);     // kaller metoden over
+    }
+
+    // maks3 metode
+    public static int maksHalvaapentI3(int[] a, int fra, int til)  // versjon 3 av maks-metoden
+    {
+        int sist = a.length - 1;       // siste posisjon i tabellen
+        int m = 0;                     // indeks til største verdi
+        int maksverdi = a[0];          // største verdi
+        int temp = a[sist];            // tar vare på siste verdi
+        a[sist] = 0x7fffffff;          // legger tallet 2147483647 sist
+
+        for (int i = 0; ; i++)         // i starter med 0
+            if (a[i] >= maksverdi)       // denne blir sann til slutt
+            {
+                if (i == sist)             // sjekker om vi er ferdige
+                {
+                    a[sist] = temp;          // legger siste verdi tilbake
+                    return temp >= maksverdi ? sist : m;   // er siste størst?
+                }
+                else
+                {
+                    maksverdi = a[i];        // maksverdi oppdateres
+                    m = i;                   // m oppdateres
+                }
+            }
+    } // maks
+
+    public static int maks3(int[] a){
+        return maksHalvaapentI3(a, 0, a.length);
+    }
+
+    //Bytt om innholdet i posisjon i og j  i char-tabellen c
+    public static void bytt(char[] c, int i, int j){
+        char tmp = c[i];
+        c[i] = c[j];
+        c[j] = tmp;
+    }
+
+    // Kontrllerer om intervallet er lovlig
+    public static void fratilKontroll(int tablengde, int fra, int til)
+    {
+        if (fra < 0)                                  // fra er negativ
+            throw new ArrayIndexOutOfBoundsException
+                    ("fra(" + fra + ") er negativ!");
+
+        if (til > tablengde)                          // til er utenfor tabellen
+            throw new ArrayIndexOutOfBoundsException
+                    ("til(" + til + ") > tablengde(" + tablengde + ")");
+
+        if (fra > til)                                // fra er større enn til
+            throw new IllegalArgumentException
+                    ("fra(" + fra + ") > til(" + til + ") - illegalt intervall!");
+    }
+
+    //Metoden skal skrive ut tallene i intervallet a[fra:til> til konsollet
+    public static void skrivI(int[] a, int fra, int til)
+    {
+        fratilKontroll(a.length, fra, til);
+        if (til - fra > 0) System.out.print(a[fra]);
+        for (int i = fra + 1; i < til; i++) System.out.print(" " + a[i]);
+    }
+
+    public static void skriv(int[] a)
+    {
+        skrivI(a, 0, a.length);
+    }
+
+    // Samme som over bare med linjeskifte på slutten
+    public static void skrivlnI(int[] a, int fra, int til)
+    {
+        skrivI(a,fra,til);
+        System.out.println();
+
+    }
+
+    public static void skrivln(int[] a)
+    {
+        skrivlnI(a, 0, a.length);
+    }
+
+    //Sjekker om intervallet er lovlig
+    public static void vhKontroll(int tablengde, int v, int h)
+    {
+        if (v < 0)
+            throw new ArrayIndexOutOfBoundsException("v(" + v + ") < 0");
+
+        if (h >= tablengde)
+            throw new ArrayIndexOutOfBoundsException
+                    ("h(" + h + ") >= tablengde(" + tablengde + ")");
+
+        if (v > h + 1)
+            throw new IllegalArgumentException
+                    ("v = " + v + ", h = " + h);
+    }
 
 }

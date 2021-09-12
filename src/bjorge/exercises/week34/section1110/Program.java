@@ -2,7 +2,7 @@ package bjorge.exercises.week34.section1110;
 
 import static bjorge.exercises.week34.section112.A123.maks1;
 import static bjorge.exercises.week34.section114.Ci_ii.maks2;
-import static bjorge.exercises.week34.section115.D1.maks3;
+import static bjorge.structure.Tabell.maks3;
 import static bjorge.structure.Tabell.randPerm;
 
 public class Program
