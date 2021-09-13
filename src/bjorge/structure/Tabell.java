@@ -38,10 +38,17 @@ public class Tabell     // Samleklasse for tabellmetoder
     // Metoden maks(int[] a, int fra, int til)   Programkode 1.2.1 b)
     public static int maks(int[] a, int fra, int til)
     {
-        if (fra < 0 || til > a.length || fra >= til)
+        /*if (fra < 0 || til > a.length || fra >= til)
         {
             throw new IllegalArgumentException("Illegalt intervall!");
-        }
+        }*/
+        if (a == null) throw new NullPointerException
+                ("parametertabellen a er null!");
+
+        fratilKontroll(a.length, fra, til);
+
+        if (fra == til) throw new NoSuchElementException
+                ("fra(" + fra + ") = til(" + til + ") - tomt tabellintervall!");
 
         int m = fra;              // indeks til største verdi i a[fra:til>
         int maksverdi = a[fra];   // største verdi i a[fra:til>
@@ -183,5 +190,47 @@ public class Tabell     // Samleklasse for tabellmetoder
             throw new IllegalArgumentException
                     ("v = " + v + ", h = " + h);
     }
+    public static int[] nestMaks(int[] a) // ny versjon                             Opperasjoner:
+    {
+        int n = a.length;     // tabellens lengde                                       #1
+        if (n < 2) throw      // må ha minst to verdier                                 #2
+                new java.util.NoSuchElementException("a.length(" + n + ") < 2!");
+
+        int m = 0;      // m er posisjonen til største verdi                            #1
+        int nm = 1;     // nm er posisjonen til nest største verdi                      #1
+
+        // bytter om m og nm hvis a[1] er større enn a[0]                               #n*3
+        if (a[1] > a[0])
+        {
+            m = 1;
+            nm = 0;
+        }
+
+        int maksverdi = a[m];                // største verdi
+        int nestmaksverdi = a[nm];           // nest største verdi
+
+        for (int i = 2; i < n; i++)
+        {
+            if (a[i] > nestmaksverdi)
+            {
+                if (a[i] > maksverdi)
+                {
+                    nm = m;
+                    nestmaksverdi = maksverdi;     // ny nest størst
+
+                    m = i;
+                    maksverdi = a[m];              // ny størst
+                }
+                else
+                {
+                    nm = i;
+                    nestmaksverdi = a[nm];         // ny nest størst
+                }
+            }
+        } // for
+
+        return new int[] {m,nm};    // n i posisjon 0, nm i posisjon 1
+
+    } // nestMaks
 
 }
