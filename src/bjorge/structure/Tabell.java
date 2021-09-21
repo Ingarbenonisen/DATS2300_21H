@@ -233,4 +233,27 @@ public class Tabell     // Samleklasse for tabellmetoder
 
     } // nestMaks
 
+    public static int[] indekssortering(int[] a) {
+        int[] indeksTabell = new int[a.length];
+        int[] hjelpeTabell = new int[a.length];
+        if (a.length == 0) {
+            return indeksTabell;
+        }
+        //Fant til slutt ut at detta ikkje fungerte for ein eller ana grunn
+        //int[] hjelpeTabell = a.
+        //Men og lage hjelpevariablen slik fungerte.
+        for (int i = 0; i < a.length; i++) {
+            hjelpeTabell[i] = a[i];
+        }
+        //Hjelpemetoder.bobblesortering(hjelpeTabell);
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a.length; j++) {
+                if (hjelpeTabell[i] == a[j]) {
+                    indeksTabell[i] = j;
+                }
+            }
+        }
+        return indeksTabell;
+    }
+
 }
