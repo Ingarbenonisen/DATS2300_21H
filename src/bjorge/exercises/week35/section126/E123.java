@@ -61,7 +61,7 @@ public class E123 {
         return m;   // returnerer indeks/posisjonen til største verdi
 
     } // maks
-    /*
+    /*Oppgave 3:
     I maks-metoden er det ingen forskjell når det gjelder sammenligninger.
     Uansett hvordan en tabell med lengde n ser ut, må det utføres n − 1 sammenligninger for å finne den største verdien.
     Men hvis vi bruker den versjonen av maks-metoden vi har i Programkode 1.1.4,
