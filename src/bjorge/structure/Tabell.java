@@ -262,5 +262,9 @@ public class Tabell     // Samleklasse for tabellmetoder
         for (int i = 1; i <= n; i++) sum += 1.0/i;
         return sum;
     }
-    
+
+    public static void kopier(int[] a, int i, int[] b, int j, int ant)
+    {
+        for (int n = i + ant; i < n; ) b[j++] = a[i++];
+    }
 }
