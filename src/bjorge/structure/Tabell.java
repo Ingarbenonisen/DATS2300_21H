@@ -267,4 +267,19 @@ public class Tabell     // Samleklasse for tabellmetoder
     {
         for (int n = i + ant; i < n; ) b[j++] = a[i++];
     }
+
+    public static void snu(int[] a, int v, int h)  // snur intervallet a[v:h]
+    {
+        while (v < h) bytt(a, v++, h--);
+    }
+
+    public static void snu(int[] a, int v)  // snur fra og med v og ut tabellen
+    {
+        snu(a, v, a.length - 1);
+    }
+
+    public static void snu(int[] a)  // snur hele tabellen
+    {
+        snu(a, 0, a.length - 1);
+    }
 }
