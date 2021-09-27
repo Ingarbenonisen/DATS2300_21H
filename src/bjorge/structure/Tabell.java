@@ -5,6 +5,15 @@ public class Tabell     // Samleklasse for tabellmetoder
 {
     private Tabell() {}   // privat standardkonstruktør - hindrer instansiering
 
+    //Metode fak(int n)
+    public static int fak(int n){
+        int n_fakultet=1;
+        for (int i=2; i<n; ++i) {
+            n_fakultet = n_fakultet*n;
+        }
+        return n_fakultet;
+    }
+
     // Metoden bytt(int[] a, int i, int j)       Programkode 1.1.8 d)
     public static void bytt(int[] a, int i, int j)
     {
@@ -319,4 +328,6 @@ public class Tabell     // Samleklasse for tabellmetoder
     {
         snu(a, 0, a.length - 1);
     }
+
+
 }

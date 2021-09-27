@@ -4,17 +4,17 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class BinTree {
-    public static int[] nestMaks(int[] a)   // en turnering
+    public static int[] nestMaks(int[] a)           // en turnering
     {
-        int n = a.length;                // for å forenkle notasjonen
+        int n = a.length;                           // for å forenkle notasjonen
 
         if (n < 2) // må ha minst to verdier!
             throw new IllegalArgumentException("a.length(" + n + ") < 2!");
 
-        int[] b = new int[2*n];          // turneringstreet
-        System.arraycopy(a, 0, b, n, n);     // legger a bakerst i b
+        int[] b = new int[2*n];                     // turneringstreet
+        System.arraycopy(a, 0, b, n, n);      // legger a bakerst i b
 
-        for (int k = 2*n-2; k > 1; k -= 2)   // lager turneringstreet
+        for (int k = 2*n-2; k > 1; k -= 2)           // lager turneringstreet
             b[k/2] = Math.max(b[k],b[k+1]);
 
         int maksverdi = b[1], nestmaksverdi = Integer.MIN_VALUE;
