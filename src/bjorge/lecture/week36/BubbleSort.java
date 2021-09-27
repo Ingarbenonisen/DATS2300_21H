@@ -1,6 +1,4 @@
-package bjorge.live.week36;
-
-import java.util.Arrays;
+package bjorge.lecture.week36;
 
 public class BubbleSort {
 

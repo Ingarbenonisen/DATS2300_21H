@@ -1,4 +1,4 @@
-package bjorge.live.week35;
+package bjorge.lecture.week35;
 
 public class Live {
     public static int min(int[] a){

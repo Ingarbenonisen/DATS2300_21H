@@ -71,7 +71,7 @@ public class Tabell     // Samleklasse for tabellmetoder
     }
 
     // min-metodene - se Oppgave 1 i Avsnitt 1.2.1
-    public static int minHalvaapentI(int[] a, int fra, int til)
+    public static int min(int[] a, int fra, int til) // Halvåpent intervall
     {
         if (fra < 0 || til > a.length || fra >= til)
         {
@@ -95,11 +95,12 @@ public class Tabell     // Samleklasse for tabellmetoder
 
     public static int minTabell(int[] a)  // bruker hele tabellen
     {
-        return minHalvaapentI(a,0,a.length);     // kaller metoden over
+        return min(a,0,a.length);     // kaller metoden over
     }
 
     // maks3 metode
-    public static int maksHalvaapentI3(int[] a, int fra, int til)  // versjon 3 av maks-metoden
+
+    public static int maks3(int[] a, int fra, int til)  // versjon 3 av maks-metoden med Halvaapent intervall
     {
         int sist = a.length - 1;       // siste posisjon i tabellen
         int m = 0;                     // indeks til største verdi
@@ -124,8 +125,44 @@ public class Tabell     // Samleklasse for tabellmetoder
     } // maks
 
     public static int maks3(int[] a){
-        return maksHalvaapentI3(a, 0, a.length);
+        return maks3(a, 0, a.length);
     }
+
+    //Maks generics metode
+    public static
+    <T extends Comparable<? super T>>
+    int maks_generic(T[] a, int fra, int til)
+    {
+        if (a == null) throw new NullPointerException("parametertabellen a er null!");
+        fratilKontroll(a.length, fra, til);
+        if (fra == til) throw new NoSuchElementException("fra(" + fra + ") = til(" + til + ") - tomt tabellintervall!");
+
+        // indeks til største verdi i a[fra:til>
+        int m = fra;
+        // største verdi i a[fra:til>
+        T maksverdi = a[fra];
+
+        for (int i = fra + 1; i < til; i++)
+        {
+            if (a[i].compareTo(maksverdi) > 0)
+            {
+                // indeks til største verdi oppdateres
+                m = i;
+                // største verdi oppdateres
+            }
+                maksverdi = a[m];
+        }
+        // posisjonen til største verdi i a[fra:til>
+        return m;
+    }
+
+
+    public static
+    <T extends Comparable<? super T>>
+    int maks_generic(T[] a){
+        return maks_generic(a, 0, a.length);
+    }
+
 
     //Bytt om innholdet i posisjon i og j  i char-tabellen c
     public static void bytt(char[] c, int i, int j){

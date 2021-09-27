@@ -1,17 +1,18 @@
 package bjorge.exercises.week35.section121;
 
 import bjorge.structure.Tabell;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+
 
 class A15Test {
     int [] a = {2, 3, 4, 5,};
     @Test
-    void minHalvaapentI() {
+    void min() {
 
-        System.out.println(Tabell.minHalvaapentI(a,1,3));
-        assertEquals(1, Tabell.minHalvaapentI(a, 1, 3));
+        System.out.println(Tabell.min(a,1,3));
+        assertEquals(1, Tabell.min(a, 1, 3));
     }
 
     @Test
@@ -23,8 +24,8 @@ class A15Test {
     }
 
     @Test
-    void maksHalvaapentI3(){
-        assertEquals(1, Tabell.maksHalvaapentI3(a, 1, 3));
+    void maks3(){
+        assertEquals(1, Tabell.maks3(a, 1, 3));
     }
     @Test
     void main(){

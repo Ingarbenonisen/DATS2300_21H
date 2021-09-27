@@ -1,4 +1,4 @@
-package bjorge.live.week35;
+package bjorge.lecture.week35;
 
 public class LiveMain {
     public static void main(String[] args) {
