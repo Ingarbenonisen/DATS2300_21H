@@ -213,7 +213,7 @@ public class Tabell     // Samleklasse for tabellmetoder
 
     }
 
-    public static void skrivln(int[] a)
+    public static void skrivln(int[] a, int i, int antall)
     {
         skrivlnI(a, 0, a.length);
     }
@@ -359,58 +359,6 @@ public class Tabell     // Samleklasse for tabellmetoder
         return true;
     }
 
-    public static void utvalgssorteringU(int[] a) // Uten hjelpemetoder
-    {
-        for (int i = 0; i < a.length - 1; i++)
-        {
-            int m = i;             // indeks til den foreløpig minste
-            int  minverdi = a[i];  // verdien til den foreløpig minste
-
-            for (int j = i + 1; j < a.length; j++)
-            {
-                if (a[j] < minverdi)
-                {
-                    minverdi = a[j];  // ny minste verdi
-                    m = j;            // indeksen til ny minste verdi
-                }
-            }
-            // bytter om a[i] og a[m]
-            /*
-            Siden me veit at a[m] er lik minverdi kan vi korte ned koden.
-            * int temp = a[i];
-            * a[i] = a[m];
-            * a[m] = temp;
-             */
-            a[m] = a[i];
-            a[i] = minverdi;
-
-        }
-    }
-
-    public static int utvalgssorteringI(int[] a, int fra, int til) // Intervall/hjelpemetoder
-    {
-        fratilKontroll(a.length, fra, til);
-        int antall = 0;
-        for (int i = fra; i < til - 1; i++)
-        {
-            int m = min(a, i, a.length); // posisjonen til den minste
-            if (m != i) bytt(a, i, m);  // to hjelpemetoder
-            else antall++;
-        }
-        return antall;
-    }
-
-    public static int utvalgssorteringM(int[] a) // Med hjelpemetoder
-    {
-        return utvalgssorteringI(a, 0, a.length-1);
-    }
-    public static int usortertsøk(int[] a, int verdi)  // tabell og søkeverdi
-    {
-        for (int i = 0; i < a.length; i++)  // går gjennom tabellen
-            if (verdi == a[i]) return i;      // verdi funnet - har indeks i
-
-        return -1;                          // verdi ikke funnet
-    }
 
     public static int søkUsortert(int[] a, int verdi)  // bruker vaktpost istedenfor i < a.length - 1 (Litt meire effektivt)
     {
@@ -536,5 +484,91 @@ public class Tabell     // Samleklasse for tabellmetoder
     {
         return binærsøk(a,0,a.length,verdi);  // bruker metoden over
     }
+
+    public static void utvalgssortering(int[] a, int fra, int til) // Uten hjelpemetoder
+    {
+        for (int i = 0; i < a.length - 1; i++) {
+            int m = i;             // indeks til den foreløpig minste
+            int minverdi = a[i];  // verdien til den foreløpig minste
+
+            for (int j = i + 1; j < a.length; j++) {
+                if (a[j] < minverdi) {
+                    minverdi = a[j];  // ny minste verdi
+                    m = j;            // indeksen til ny minste verdi
+                }
+            }
+            // bytter om a[i] og a[m]
+            /*
+            Siden me veit at a[m] er lik minverdi kan vi korte ned koden.
+            * int temp = a[i];
+            * a[i] = a[m];
+            * a[m] = temp;
+             */
+            a[m] = a[i];
+            a[i] = minverdi;
+
+        }
+    }
+    public static void utvalgssortering(int[] a) // Uten hjelpemetoder
+    {
+        utvalgssortering(a, 0, a.length-1);
+    }
+
+    public static int utvalgssorteringM(int[] a, int fra, int til) // Intervall/hjelpemetoder
+    {
+        fratilKontroll(a.length, fra, til);
+        int antall = 0;                     // antall ganger m og i ikkje er like
+        for (int i = fra; i < til - 1; i++)
+        {
+            int m = min(a, i, a.length); // posisjonen til den minste
+            if (m != i) bytt(a, i, m);  // to hjelpemetoder
+            else antall++;
+        }
+        return antall;
+    }
+
+    public static int utvalgssorteringM(int[] a) // Med hjelpemetoder
+    {
+        return utvalgssorteringM(a, 0, a.length-1);
+    }
+    public static int usortertsøk(int[] a, int verdi)  // tabell og søkeverdi
+    {
+        for (int i = 0; i < a.length; i++)  // går gjennom tabellen
+            if (verdi == a[i]) return i;      // verdi funnet - har indeks i
+
+        return -1;                          // verdi ikke funnet
+    }
+
+    public static void innsettingssortering(int[] a) {
+        for (int i = 1; i < a.length; i++)  // starter med i = 1
+        {
+            int verdi = a[i], j = i - 1;      // verdi er et tabellelemnet, j er en indeks
+            for (; j >= 0 && verdi < a[j]; j--) a[j + 1] = a[j];  // sammenligner og flytter
+            a[j + 1] = verdi;                 // j + 1 er rett sortert plass
+        }
+    }
+    public static void innsettingssortering(int[] a, int fra, int til)
+    {
+        Tabell.fratilKontroll(a.length,fra,til);  // se Programkode 1.2.3 a)
+
+        for (int i = fra + 1; i < til; i++)  // a[fra] er første verdi
+        {
+            int temp = a[i];  // flytter a[i] til en hjelpevariabel
+
+            // verdier flyttes inntil rett sortert plass i a[fra:i> er funnet
+            int j = i-1; for (; j >= fra && temp < a[j]; j--) a[j+1] = a[j];
+
+            a[j+1] = temp;  // verdien settes inn på rett sortert plass
+        }
+    }
+    public static void shell(int[] a, int k)
+    {
+        for (int i = k; i < a.length; i++)
+        {
+            int temp = a[i], j = i - k;
+            for ( ; j >= 0 && temp < a[j]; j -= k) a[j + k] = a[j];
+            a[j + k] = temp;
+        }
+    }           // Programkode 1.3.8 f)
 
 }
