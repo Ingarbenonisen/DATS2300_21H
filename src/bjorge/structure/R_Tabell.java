@@ -27,11 +27,13 @@ public class R_Tabell {
     }
     //Rekursift utskrift av permutasjoner
     public static void recursive_permutation(int[] values, int k){
-        System.out.println(Arrays.toString(values));
+        //Sånn som eg forstod det så vil den rukursive funkdjonen ikkje gå videre når den blir printet ut, spørr om dette
+        if (k == values.length-1){
+            System.out.println(Arrays.toString(values));
+        }
         for (int i = k; i < values.length ; i++) {
             Tabell.bytt(values, i, k);
-            //recursive_permutation(values, k+1);
-            System.out.println(Arrays.toString(values));
+            recursive_permutation(values, k+1);
             Tabell.bytt(values, k, i);
         }
     }

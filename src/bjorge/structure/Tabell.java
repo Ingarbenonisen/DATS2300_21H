@@ -5,8 +5,9 @@ public class Tabell     // Samleklasse for tabellmetoder
 {
     private Tabell() {}   // privat standardkonstruktør - hindrer instansiering
 
-    //Metode fak(int n)
-    public static int fak(int n){
+
+    public static int fak(int n)      //Metode fak(int n)
+    {
         int n_fakultet=1;
         for (int i=2; i<n; ++i) {
             n_fakultet = n_fakultet*n;
@@ -14,14 +15,9 @@ public class Tabell     // Samleklasse for tabellmetoder
         return n_fakultet;
     }
 
-    // Metoden bytt(int[] a, int i, int j)       Programkode 1.1.8 d)
-    public static void bytt(int[] a, int i, int j)
-    {
-        int temp = a[i]; a[i] = a[j]; a[j] = temp;
-    }
 
-    // Metoden randPerm(int n)                   Programkode 1.1.8 e)
-    public static int[] randPerm(int n)
+
+    public static int[] randPerm(int n)     // Metoden randPerm(int n) returnerer int[]                 Programkode 1.1.8 e)
     {
         Random r = new Random();                 // en randomgenerator
         int[] a = new int[n];                    // en tabell med plass til n tall
@@ -32,8 +28,7 @@ public class Tabell     // Samleklasse for tabellmetoder
         return a;                                // tabellen returneres
     }
 
-    // Metoden randPerm(int[] a)                 Programkode 1.1.8 f)
-    public static void randPerm(int[] a)  // stokker om a
+    public static void randPerm(int[] a)        // Metoden randPerm(int[] a), stokker om a              Programkode 1.1.8 f)
     {
         Random r = new Random();     // en randomgenerator
 
@@ -107,8 +102,6 @@ public class Tabell     // Samleklasse for tabellmetoder
         return min(a,0,a.length);     // kaller metoden over
     }
 
-    // maks3 metode
-
     public static int maks3(int[] a, int fra, int til)  // versjon 3 av maks-metoden med Halvaapent intervall
     {
         int sist = a.length - 1;       // siste posisjon i tabellen
@@ -133,7 +126,8 @@ public class Tabell     // Samleklasse for tabellmetoder
             }
     } // maks
 
-    public static int maks3(int[] a){
+    public static int maks3(int[] a)
+    {
         return maks3(a, 0, a.length);
     }
 
@@ -165,23 +159,25 @@ public class Tabell     // Samleklasse for tabellmetoder
         return m;
     }
 
-
     public static
     <T extends Comparable<? super T>>
     int maks_generic(T[] a){
         return maks_generic(a, 0, a.length);
     }
 
-
-    //Bytt om innholdet i posisjon i og j  i char-tabellen c
-    public static void bytt(char[] c, int i, int j){
+    public static void bytt(char[] c, int i, int j) //Bytt om innholdet i posisjon i og j  i char-tabellen c
+    {
         char tmp = c[i];
         c[i] = c[j];
         c[j] = tmp;
     }
 
-    // Kontrllerer om intervallet er lovlig
-    public static void fratilKontroll(int tablengde, int fra, int til)
+    public static void bytt(int[] a, int i, int j)  // Metoden bytt(int[] a, int i, int j)       Programkode 1.1.8 d)
+    {
+        int temp = a[i]; a[i] = a[j]; a[j] = temp;
+    }
+
+    public static void fratilKontroll(int tablengde, int fra, int til)  // Kontrllerer om intervallet er lovlig
     {
         if (fra < 0)                                  // fra er negativ
             throw new ArrayIndexOutOfBoundsException
@@ -196,8 +192,8 @@ public class Tabell     // Samleklasse for tabellmetoder
                     ("fra(" + fra + ") > til(" + til + ") - illegalt intervall!");
     }
 
-    //Metoden skal skrive ut tallene i intervallet a[fra:til> til konsollet
-    public static void skrivI(int[] a, int fra, int til)
+
+    public static void skrivI(int[] a, int fra, int til)    //Metoden skal skrive ut tallene i intervallet a[fra:til> til konsollet
     {
         fratilKontroll(a.length, fra, til);
         if (til - fra > 0) System.out.print(a[fra]);
@@ -329,5 +325,216 @@ public class Tabell     // Samleklasse for tabellmetoder
         snu(a, 0, a.length - 1);
     }
 
+    public static boolean nestePermutasjon(int[] a) // finner neste permutasjon
+    {
+        int i = a.length - 2;                    // i starter nest bakerst
+        while (i >= 0 && a[i] > a[i + 1]) i--;   // går mot venstre
+        if (i < 0) return false;                 // a = {n, n-1, . . . , 2, 1}
+
+        int j = a.length - 1;                    // j starter bakerst
+        while (a[j] < a[i]) j--;                 // stopper når a[j] > a[i]
+        bytt(a,i,j); snu(a,i + 1);               // bytter og snur
+
+        return true;                             // en ny permutasjon
+    }
+
+    public static int inversjoner(int[] a)
+    {
+        int antall = 0;  // antall inversjoner
+        for (int i = 0; i < a.length - 1; i++)
+        {
+            for (int j = i + 1; j < a.length; j++)
+            {
+                if (a[i] > a[j]) antall++;  // en inversjon siden i < j
+            }
+        }
+        return antall;
+    }
+
+    public static boolean erSortert(int[] a)  // legges i samleklassen Tabell
+    {
+        for (int i = 1; i < a.length; i++)      // starter med i = 1
+            if (a[i-1] > a[i]) return false;      // en inversjon
+
+        return true;
+    }
+
+    public static void utvalgssorteringU(int[] a) // Uten hjelpemetoder
+    {
+        for (int i = 0; i < a.length - 1; i++)
+        {
+            int m = i;             // indeks til den foreløpig minste
+            int  minverdi = a[i];  // verdien til den foreløpig minste
+
+            for (int j = i + 1; j < a.length; j++)
+            {
+                if (a[j] < minverdi)
+                {
+                    minverdi = a[j];  // ny minste verdi
+                    m = j;            // indeksen til ny minste verdi
+                }
+            }
+            // bytter om a[i] og a[m]
+            /*
+            Siden me veit at a[m] er lik minverdi kan vi korte ned koden.
+            * int temp = a[i];
+            * a[i] = a[m];
+            * a[m] = temp;
+             */
+            a[m] = a[i];
+            a[i] = minverdi;
+
+        }
+    }
+
+    public static int utvalgssorteringI(int[] a, int fra, int til) // Intervall/hjelpemetoder
+    {
+        fratilKontroll(a.length, fra, til);
+        int antall = 0;
+        for (int i = fra; i < til - 1; i++)
+        {
+            int m = min(a, i, a.length); // posisjonen til den minste
+            if (m != i) bytt(a, i, m);  // to hjelpemetoder
+            else antall++;
+        }
+        return antall;
+    }
+
+    public static int utvalgssorteringM(int[] a) // Med hjelpemetoder
+    {
+        return utvalgssorteringI(a, 0, a.length-1);
+    }
+    public static int usortertsøk(int[] a, int verdi)  // tabell og søkeverdi
+    {
+        for (int i = 0; i < a.length; i++)  // går gjennom tabellen
+            if (verdi == a[i]) return i;      // verdi funnet - har indeks i
+
+        return -1;                          // verdi ikke funnet
+    }
+
+    public static int søkUsortert(int[] a, int verdi)  // bruker vaktpost istedenfor i < a.length - 1 (Litt meire effektivt)
+    {
+        int sist = a.length - 1;
+        int tmp = a[sist];  // tar vare på den siste
+        a[sist] = verdi;    // verdi blir vaktpost
+
+        for (int i = 0; ; i++)  // i < a.length er tatt vekk
+            if (verdi == a[i])    // dette blir sant før eller senere
+            {
+                a[sist] = tmp;  // legger den siste tilbake
+                if (i == sist) return verdi == tmp ? sist : -1;
+                else return i;
+            }
+    }
+
+
+    public static int lineærsøk(int[] a, int verdi)
+        /*
+         * k = -(p + 1) , p = -(k + 1)
+         * p = posisjon
+         */
+    {
+        if (a.length == 0 || verdi > a[a.length-1])
+            return -(a.length + 1);  // verdi er større enn den største
+
+        int i = 0; for( ; a[i] < verdi; i++);  // siste verdi er vaktpost
+
+        return verdi == a[i] ? i : -(i + 1);   // sjekker innholdet i a[i]
+    }
+
+    public static int lineærsøkFraHogre(int[] a, int verdi)    // vi leter motsatt vei, dvs. starter bakerst
+    {
+        if (a.length == 0 || verdi < a[0])
+            return -1;  // verdi er mindre enn den største
+
+        int i = a.length - 1; for( ; a[i] > verdi; i--);
+
+        return verdi == a[i] ? i : -(i + 2);
+    }
+
+    public static int lineærsøk(int[] a, int k, int verdi)
+    {
+        if (k < 1)
+            throw new IllegalArgumentException("Må ha k > 0!");
+
+        int j = k - 1;
+        for (; j < a.length && verdi > a[j]; j += k);
+
+        int i = j - k + 1;  // søker i a[j-k+1:j]
+        for (; i < a.length && verdi > a[i]; i++);
+
+        if (i < a.length && a[i] == verdi) return i;  // funnet
+        else return -(i + 1);
+    }
+
+    public static int kvadratrotsøk(int[] a, int verdi)
+    {
+        return lineærsøk(a,(int)Math.sqrt(a.length),verdi);
+    }
+
+    /*
+    // første versjon
+    public static int binærsøk(int[] a, int fra, int til, int verdi)
+    {
+        Tabell.fratilKontroll(a.length,fra,til);  // se Programkode 1.2.3 a)
+        int v = fra, h = til - 1;  // v og h er intervallets endepunkter
+
+        while (v <= h)    // fortsetter så lenge som a[v:h] ikke er tom
+        {
+            int m = (v + h)/2;      // heltallsdivisjon - finner midten
+            int midtverdi = a[m];   // hjelpevariabel for midtverdien
+
+            if (verdi == midtverdi) return m;          // funnet
+            else if (verdi > midtverdi) v = m + 1;     // verdi i a[m+1:h]
+            else  h = m - 1;                           // verdi i a[v:m-1]
+        }
+
+        return -(v + 1);    // ikke funnet, v er relativt innsettingspunkt
+    }
+
+
+
+    // 2. versjon av binærsøk - returverdier som for Programkode 1.3.6 a)
+    public static int binærsøk(int[] a, int fra, int til, int verdi)
+    {
+        Tabell.fratilKontroll(a.length,fra,til);  // se Programkode 1.2.3 a)
+        int v = fra, h = til - 1;    // v og h er intervallets endepunkter
+
+        while (v <= h)  // fortsetter så lenge som a[v:h] ikke er tom
+        {
+            int m = (v + h)/2;     // heltallsdivisjon - finner midten
+            int midtverdi = a[m];  // hjelpevariabel for  midtverdien
+
+            if (verdi > midtverdi) v = m + 1;        // verdi i a[m+1:h]
+            else if (verdi < midtverdi) h = m - 1;   // verdi i a[v:m-1]
+            else return m;                           // funnet
+        }
+
+        return -(v + 1);   // ikke funnet, v er relativt innsettingspunkt
+    }
+     */
+
+    // 3. versjon av binærsøk - returverdier som for Programkode 1.3.6 a) - Denne er mest effektiv
+    public static int binærsøk(int[] a, int fra, int til, int verdi)
+    {
+        Tabell.fratilKontroll(a.length,fra,til);  // se Programkode 1.2.3 a)
+        int v = fra, h = til - 1;  // v og h er intervallets endepunkter
+
+        while (v < h)  // obs. må ha v < h her og ikke v <= h
+        {
+            int m = (v + h)/2;  // heltallsdivisjon - finner midten
+
+            if (verdi > a[m]) v = m + 1;   // verdi må ligge i a[m+1:h]
+            else  h = m;                   // verdi må ligge i a[v:m]
+        }
+        if (h < v || verdi < a[v]) return -(v + 1);  // ikke funnet
+        else if (verdi == a[v]) return v;            // funnet
+        else  return -(v + 2);                       // ikke funnet
+    }
+
+    public static int binærsøk(int[] a, int verdi)  // søker i hele a
+    {
+        return binærsøk(a,0,a.length,verdi);  // bruker metoden over
+    }
 
 }

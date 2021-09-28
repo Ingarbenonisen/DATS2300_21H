@@ -13,8 +13,10 @@ public class Recursive {
             System.out.println(i + " - " + R_Tabell.binarySearchRecursive(tallTabell, i, 0, tallTabell.length-1));
         }
          */
+         /*
         int[] values = {1,2,3};
         recursive_permutation(values, 0);
+          */
     }
     //Rekursift binær søk
     /*
@@ -41,6 +43,7 @@ public class Recursive {
 
      */
     //Rekursive permutasjoner
+     /*
     public static void recursive_permutation(int[] values, int k){
         //Sånn som eg forstod det så vil den rukursive funkdjonen ikkje gå videre når den blir printet ut, spørr om dette
         if (k == values.length-1){
@@ -52,5 +55,6 @@ public class Recursive {
             Tabell.bytt(values, k, i);
         }
     }
+      */
 
 }
