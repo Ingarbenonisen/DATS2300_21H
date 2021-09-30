@@ -39,6 +39,21 @@ public class Tabell     // Samleklasse for tabellmetoder
         }
     }
 
+    public static Integer[] randPermInteger(int n)
+    {
+        Integer[] a = new Integer[n];               // en Integer-tabell
+        Arrays.setAll(a, i -> i + 1);               // tallene fra 1 til n
+
+        Random r = new Random();   // hentes fra  java.util
+
+        for (int k = n - 1; k > 0; k--)
+        {
+            int i = r.nextInt(k+1);  // tilfeldig tall fra [0,k]
+            bytt(a,k,i);             // bytter om
+        }
+        return a;  // tabellen med permutasjonen returneres
+    }
+
     // Metoden maks(int[] a, int fra, int til)   Programkode 1.2.1 b)
     public static int maks(int[] a, int fra, int til)
     {
@@ -97,7 +112,7 @@ public class Tabell     // Samleklasse for tabellmetoder
         return m;  // posisjonen til største verdi i a[fra:til>
     }
 
-    public static int minTabell(int[] a)  // bruker hele tabellen
+    public static int min(int[] a)  // bruker hele tabellen
     {
         return min(a,0,a.length);     // kaller metoden over
     }
@@ -165,6 +180,19 @@ public class Tabell     // Samleklasse for tabellmetoder
         return maks_generic(a, 0, a.length);
     }
 
+    public static <T extends Comparable<? super T>> int maks(T[] a) // fra 1.4.2
+    {
+        int m = 0;                     // indeks til største verdi
+        T maksverdi = a[0];            // største verdi
+
+        for (int i = 1; i < a.length; i++) if (a[i].compareTo(maksverdi) > 0)
+        {
+            maksverdi = a[i];  // største verdi oppdateres
+            m = i;             // indeks til største verdi oppdaters
+        }
+        return m;  // returnerer posisjonen til største verdi
+    } // maks
+
     public static void bytt(char[] c, int i, int j) //Bytt om innholdet i posisjon i og j  i char-tabellen c
     {
         char tmp = c[i];
@@ -176,6 +204,14 @@ public class Tabell     // Samleklasse for tabellmetoder
     {
         int temp = a[i]; a[i] = a[j]; a[j] = temp;
     }
+
+    public static void bytt(Object[] a, int i, int j)
+    {
+        Object temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+
 
     public static void fratilKontroll(int tablengde, int fra, int til)  // Kontrllerer om intervallet er lovlig
     {
@@ -232,6 +268,31 @@ public class Tabell     // Samleklasse for tabellmetoder
             throw new IllegalArgumentException
                     ("v = " + v + ", h = " + h);
     }
+
+    public static void skriv(Object[] a, int fra, int til)
+    {
+        fratilKontroll(a.length,fra,til);
+
+        for (int i = fra; i < til; i++) System.out.print(a[i] + " ");
+    }
+
+    public static void skriv(Object[] a)
+    {
+        skriv(a,0,a.length);
+    }
+
+    public static void skrivln(Object[] a, int fra, int til)
+    {
+        skriv(a,fra,til);
+        System.out.println();
+    }
+
+    public static void skrivln(Object[] a)
+    {
+        skrivln(a,0,a.length);
+    }
+
+
     public static int[] nestMaks(int[] a) // ny versjon                             Opperasjoner:
     {
         int n = a.length;     // tabellens lengde                                       #1
@@ -561,6 +622,20 @@ public class Tabell     // Samleklasse for tabellmetoder
             a[j+1] = temp;  // verdien settes inn på rett sortert plass
         }
     }
+
+    public static <T extends Comparable<? super T>>
+    void innsettingssortering(T[] a)
+    {
+        for (int i = 1; i < a.length; i++)  // starter med i = 1
+        {
+            T verdi = a[i];        // verdi er et tabellelemnet
+            int  j = i - 1;        // j er en indeks
+            // sammenligner og forskyver:
+            for (; j >= 0 && verdi.compareTo(a[j]) < 0 ; j--) a[j+1] = a[j];
+
+            a[j + 1] = verdi;      // j + 1 er rett sortert plass
+        }
+    }
     public static void shell(int[] a, int k)
     {
         for (int i = k; i < a.length; i++)
@@ -571,4 +646,20 @@ public class Tabell     // Samleklasse for tabellmetoder
         }
     }           // Programkode 1.3.8 f)
 
+    public static int sammenlign(String s1, String s2)
+    {
+        int n1 = s1.length();    // lengden til s1
+        int n2 = s2.length();    // lengden til s2
+
+        int n = n1 < n2 ? n1 : n2;    // den minste av n1 og n2
+
+        for (int i = 0; i < n; i++)
+        {
+            char c1 = s1.charAt(i);
+            char c2 = s2.charAt(i);
+
+            if (c1 != c2) return c1 - c2;
+        }
+        return n1 - n2;
+    }
 }

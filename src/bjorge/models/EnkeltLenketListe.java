@@ -16,7 +16,6 @@ public class EnkeltLenketListe<T> implements Liste<T>
     public void leggInn(int indeks, T verdi) {
 
     }
-
     @Override
     public boolean inneholder(T verdi) {
         return false;

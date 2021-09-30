@@ -1,5 +1,6 @@
-package bjorge.structure;
+package bjorge.tests;
 
+import bjorge.structure.Tabell;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
