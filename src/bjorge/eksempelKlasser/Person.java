@@ -9,6 +9,8 @@ public class Person implements Comparable<Person>
 
     public Person(String fornavn, String etternavn)   // konstruktør
     {
+        Objects.requireNonNull(fornavn, "fornavn er null");
+        Objects.requireNonNull(etternavn, "etternavn er null");
         this.fornavn = fornavn;
         this.etternavn = etternavn;
     }
@@ -22,12 +24,29 @@ public class Person implements Comparable<Person>
         if (cmp != 0) return cmp;             // er etternavnene ulike?
         return fornavn.compareTo(p.fornavn);  // sammenligner fornavn
     }
-
+/*
     public boolean equals(Object o)      // vår versjon av equals
     {
         if (o == this) return true;
         if (!(o instanceof Person)) return false;
         return compareTo((Person)o) == 0;
+    }
+
+ */
+
+    public boolean equals(Object o)         // ny versjon av equals
+    {
+        if (o == this) return true;           // er det samme objekt?
+        if (o == null) return false;          // null-argument
+        if (getClass() != o.getClass()) return false;  // er det rett klasse?
+        final Person p = (Person)o;           // typekonvertering
+        return etternavn.equals(p.etternavn) && fornavn.equals(p.fornavn);
+    }
+    public boolean equals(Person p)         // Person som parametertype
+    {
+        if (p == this) return true;           // er det samme objekt?
+        if (p == null) return false;          // null-argument
+        return etternavn.equals(p.etternavn) && fornavn.equals(p.fornavn);
     }
 
     public int hashCode() { return Objects.hash(etternavn, fornavn); }
