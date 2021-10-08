@@ -53,5 +53,16 @@ public class F12345_7 {
 
         Tabell.innsettingssortering(s, c);    // Programkode 1.4.6 b)
         System.out.println(Arrays.toString(s));
+
+        Tabell.innsettingssortering(s, (s1, s2) ->              // Sorterer etter studium, fornanv og etternavn
+            {
+                int k = s1.studium().compareTo(s2.studium());
+                if (k != 0) return k;
+                k = s1.fornavn().compareTo(s2.fornavn());
+                if (k != 0 ) return k;
+                return s1.etternavn().compareTo(s2.etternavn());
+            }
+            );
+        System.out.println(Arrays.toString(s));
     }
 }
