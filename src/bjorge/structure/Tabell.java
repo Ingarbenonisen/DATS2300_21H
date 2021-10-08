@@ -1,4 +1,6 @@
 package bjorge.structure;
+import bjorge.eksempelKlasser.Komparator;
+
 import java.util.*;
 
 public class Tabell     // Samleklasse for tabellmetoder
@@ -159,7 +161,6 @@ public class Tabell     // Samleklasse for tabellmetoder
         int m = fra;
         // største verdi i a[fra:til>
         T maksverdi = a[fra];
-
         for (int i = fra + 1; i < til; i++)
         {
             if (a[i].compareTo(maksverdi) > 0)
@@ -661,5 +662,18 @@ public class Tabell     // Samleklasse for tabellmetoder
             if (c1 != c2) return c1 - c2;
         }
         return n1 - n2;
+    }
+    public static <T> void innsettingssortering(T[] a, Komparator<? super T> c)
+    {
+        for (int i = 1; i < a.length; i++)  // starter med i = 1
+        {
+            T verdi = a[i];        // verdi er et tabellelemnet
+            int  j = i - 1;        // j er en indeks
+
+            // sammenligner og forskyver:
+            for (; j >= 0 && c.compare(verdi,a[j]) < 0 ; j--) a[j+1] = a[j];
+
+            a[j + 1] = verdi;      // j + 1 er rett sortert plass
+        }
     }
 }

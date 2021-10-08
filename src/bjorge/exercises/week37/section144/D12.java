@@ -48,5 +48,6 @@ public class D12 {
         Stream s = Arrays.stream(p);
         Optional<Person> resultat = s.max(Comparator.naturalOrder());
         resultat.ifPresent(System.out::println);
+        Arrays.stream(p).max(Comparator.naturalOrder()).ifPresent(System.out::println);
     }
 }
