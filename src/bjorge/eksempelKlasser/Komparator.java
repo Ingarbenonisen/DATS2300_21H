@@ -1,21 +1,30 @@
 package bjorge.eksempelKlasser;
 
-@FunctionalInterface                // legges i mappen eksempelklasser
+@FunctionalInterface
 public interface Komparator<T>      // et funksjonsgrensesnitt
 {
-    int compare(T x, T y);            // en abstrakt metode
+    int compare(T o1, T o2);          // en abstrakt metode
 
-    public static <T> void innsettingssortering(T[] a, Komparator<? super T> c)
+    public static <T extends Comparable<? super T>> Komparator<T> naturligOrden()
     {
-        for (int i = 1; i < a.length; i++)  // starter med i = 1
-        {
-            T verdi = a[i];        // verdi er et tabellelemnet
-            int  j = i - 1;        // j er en indeks
-
-            // sammenligner og forskyver:
-            for (; j >= 0 && c.compare(verdi,a[j]) < 0 ; j--) a[j+1] = a[j];
-
-            a[j + 1] = verdi;      // j + 1 er rett sortert plass
-        }
+        return (x, y) -> x.compareTo(y);
     }
-}
+
+    public static <T extends Comparable<? super T>> Komparator<T> omvendtOrden()
+    {
+        return (x, y) -> y.compareTo(x);
+    }
+
+    public static <T, R extends Comparable<? super R>>
+    Komparator<T> orden(Funksjon<? super T, ? extends R> velger)
+    {
+        return (x, y) -> velger.anvend(x).compareTo(velger.anvend(y));
+    }
+
+    public static <T, R> Komparator<T> orden
+            (Funksjon<? super T, ? extends R> velger, Komparator<? super R> c)
+    {
+        return (x, y) -> c.compare(velger.anvend(x), velger.anvend(y));
+    }
+
+}  // Komparator

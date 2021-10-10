@@ -7,6 +7,7 @@ import bjorge.eksempelKlasser.Studium;
 import bjorge.structure.Tabell;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class F12345_7 {
     public static void main(String... args)
@@ -41,8 +42,8 @@ public class F12345_7 {
         s[3] = new Student(p[3].fornavn(), p[3].etternavn(), Studium.IT);       // Azra Zukanovic
         s[4] = new Student(p[4].fornavn(), p[4].etternavn(), Studium.Data);     // Kari Pettersen
 
+         /*
         Tabell.innsettingssortering(s, (s1,s2) -> s1.studium().compareTo(s2.studium()));
-        System.out.println(Arrays.toString(s));
 
 
         Komparator<Student> c = (s1,s2) ->
@@ -50,9 +51,8 @@ public class F12345_7 {
             int cmp = s1.studium().compareTo(s2.studium());
             return cmp != 0 ? cmp : s1.compareTo(s2);
         };
-
         Tabell.innsettingssortering(s, c);    // Programkode 1.4.6 b)
-        System.out.println(Arrays.toString(s));
+
 
         Tabell.innsettingssortering(s, (s1, s2) ->              // Sorterer etter studium, fornanv og etternavn
             {
@@ -63,6 +63,12 @@ public class F12345_7 {
                 return s1.etternavn().compareTo(s2.etternavn());
             }
             );
+
+
+         */
+        Arrays.sort(s, (s1, s2) -> s1.studium().compareTo(s2.studium()));
+        Arrays.sort(s, Comparator.comparing(Student::studium));
+
         System.out.println(Arrays.toString(s));
     }
 }

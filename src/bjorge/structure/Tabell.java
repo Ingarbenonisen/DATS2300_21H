@@ -547,7 +547,7 @@ public class Tabell     // Samleklasse for tabellmetoder
         return binærsøk(a,0,a.length,verdi);  // bruker metoden over
     }
 
-    public static void utvalgssortering(int[] a, int fra, int til) // Uten hjelpemetoder
+    public static void utvalgssortering(int[] a) // Uten hjelpemetoder
     {
         for (int i = 0; i < a.length - 1; i++) {
             int m = i;             // indeks til den foreløpig minste
@@ -571,10 +571,6 @@ public class Tabell     // Samleklasse for tabellmetoder
 
         }
     }
-    public static void utvalgssortering(int[] a) // Uten hjelpemetoder
-    {
-        utvalgssortering(a, 0, a.length-1);
-    }
 
     public static int utvalgssorteringM(int[] a, int fra, int til) // Intervall/hjelpemetoder
     {
@@ -582,7 +578,7 @@ public class Tabell     // Samleklasse for tabellmetoder
         int antall = 0;                     // antall ganger m og i ikkje er like
         for (int i = fra; i < til - 1; i++)
         {
-            int m = min(a, i, a.length); // posisjonen til den minste
+            int m = min(a, i, til); // posisjonen til den minste
             if (m != i) bytt(a, i, m);  // to hjelpemetoder
             else antall++;
         }
@@ -593,6 +589,7 @@ public class Tabell     // Samleklasse for tabellmetoder
     {
         return utvalgssorteringM(a, 0, a.length-1);
     }
+
     public static int usortertsøk(int[] a, int verdi)  // tabell og søkeverdi
     {
         for (int i = 0; i < a.length; i++)  // går gjennom tabellen
@@ -663,6 +660,7 @@ public class Tabell     // Samleklasse for tabellmetoder
         }
         return n1 - n2;
     }
+
     public static <T> void innsettingssortering(T[] a, Komparator<? super T> c)
     {
         for (int i = 1; i < a.length; i++)  // starter med i = 1
@@ -676,4 +674,5 @@ public class Tabell     // Samleklasse for tabellmetoder
             a[j + 1] = verdi;      // j + 1 er rett sortert plass
         }
     }
+
 }
