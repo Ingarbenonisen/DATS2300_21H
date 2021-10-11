@@ -10,6 +10,7 @@ public class Student extends Person   // Student blir subklasse til Person
         this.studium = studium;
     }
 
+    @Override
     public String toString() { return super.toString() + " " + studium.name();}
 
     public Studium studium() { return studium; }

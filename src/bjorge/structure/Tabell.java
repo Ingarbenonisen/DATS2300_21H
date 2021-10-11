@@ -661,7 +661,8 @@ public class Tabell     // Samleklasse for tabellmetoder
         return n1 - n2;
     }
 
-    public static <T> void innsettingssortering(T[] a, Komparator<? super T> c)
+    public static <T> void
+    innsettingssortering(T[] a, Komparator<? super T> c)
     {
         for (int i = 1; i < a.length; i++)  // starter med i = 1
         {

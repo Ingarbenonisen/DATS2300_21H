@@ -46,26 +46,25 @@ public class Person implements Comparable<Object>
     }
 
  */
-public int compareTo(Object o)    // pga. Comparable<Object>
-{
-    Person p = (Person)o;
-    int cmp = etternavn.compareTo(p.etternavn);     // etternavn
-    if (cmp != 0) return cmp;           // er etternavnene ulike?
+    @Override
+    public int compareTo(Object o)    // pga. Comparable<Object>
+    {
+        Person p = (Person)o;
+        int cmp = etternavn.compareTo(p.etternavn);     // etternavn
+        if (cmp != 0) return cmp;           // er etternavnene ulike?
 
-    return fornavn.compareTo(p.fornavn);   // sammenligner fornavn
-}
-
+        return fornavn.compareTo(p.fornavn);   // sammenligner fornavn
+    }
+    @Override
     public boolean equals(Object o)      // vår versjon av equals
     {
         if (o == this) return true;
         if (!(o instanceof Person)) return false;
         return compareTo((Person)o) == 0;
     }
-
-
-
+    @Override
     public int hashCode() { return Objects.hash(etternavn, fornavn); }
-
+    @Override
     public String toString()
     {
         return String.join(" ", fornavn, etternavn);
