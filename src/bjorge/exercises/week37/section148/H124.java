@@ -10,6 +10,9 @@ import java.util.Locale;
 // 1.4.8  Leksikografiske ordninger
 public class H124 {
     public static void main(String[] args) {
+        /* Endret i innsettingssortering slit at den kan ta inn metoder fra Comperator ikkje Komperator som i kode her.
+         *  Derfor er den kommentert ut.
+
         Komparator<String> c_1 = (s1, s2) ->
         {
             int k = s1.length() - s2.length();
@@ -48,5 +51,21 @@ public class H124 {
         System.out.println(Arrays.toString(s));
         // Utskrift: [kari, Kari, KARI, ole, Ole, OLE, per, Per, PER]
 
+
+
+        String[] s = {"OLE","Per","Kari","PER","Ole","kari","per","KARI","ole"};
+
+        Tabell.innsettingssortering(s, Komparator.orden(x -> x));
+        System.out.println(Arrays.toString(s));
+
+        Tabell.innsettingssortering(s, Komparator.naturligOrden());
+        System.out.println(Arrays.toString(s));
+
+        String[] s1 = {"21","18","8","13","20","6","16","25","3","10"};
+
+        Komparator<String> c1 =     Komparator.orden(String::length);  // ordner etter lengde
+        Tabell.innsettingssortering(s1, c1.deretter(x -> x)); // x -> x representererer f(x) = x
+        System.out.println(Arrays.toString(s1));
+         */
     }
 }

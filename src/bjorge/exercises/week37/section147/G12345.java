@@ -8,6 +8,9 @@ import java.util.Arrays;
 
 public class G12345 {
     public static void main(String[] args) {
+        /*  Endret i innsettingssortering slit at den kan ta inn metoder fra Comperator ikkje Komperator som i kode her.
+         *  Derfor er den kommentert ut.
+
         // Kode fra avsnittet 1.4.7
         //Integer[] a = {6,2,10,9,5,1,8,4,3,7};                            // Integer
         //String[] s = {"Sohil","Per","Thanh","Ann","Kari","Jon"};         // String
@@ -86,6 +89,8 @@ public class G12345 {
         // Sorterer minst til lengst
         Tabell.innsettingssortering(s, Komparator.orden(x -> x.length()));
         System.out.println(Arrays.toString(s));
+
+         */
 
 
     }

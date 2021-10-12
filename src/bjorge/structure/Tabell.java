@@ -206,15 +206,7 @@ public class Tabell     // Samleklasse for tabellmetoder
         int temp = a[i]; a[i] = a[j]; a[j] = temp;
     }
 
-    public static void bytt(Object[] a, int i, int j)
-    {
-        Object temp = a[i];
-        a[i] = a[j];
-        a[j] = temp;
-    }
-
-
-    public static void fratilKontroll(int tablengde, int fra, int til)  // Kontrllerer om intervallet er lovlig
+       public static void fratilKontroll(int tablengde, int fra, int til)  // Kontrllerer om intervallet er lovlig
     {
         if (fra < 0)                                  // fra er negativ
             throw new ArrayIndexOutOfBoundsException
@@ -661,19 +653,109 @@ public class Tabell     // Samleklasse for tabellmetoder
         return n1 - n2;
     }
 
-    public static <T> void
-    innsettingssortering(T[] a, Komparator<? super T> c)
+    public static <T> void innsettingssortering(T[] a, Comparator<? super T> c)
     {
-        for (int i = 1; i < a.length; i++)  // starter med i = 1
+        for (int i = 1; i < a.length; i++)
         {
-            T verdi = a[i];        // verdi er et tabellelemnet
-            int  j = i - 1;        // j er en indeks
+            T temp = a[i];  // flytter a[i] til en hjelpevariabel
 
-            // sammenligner og forskyver:
-            for (; j >= 0 && c.compare(verdi,a[j]) < 0 ; j--) a[j+1] = a[j];
+            int j = i-1;    // starter med neste tabellposisjon
 
-            a[j + 1] = verdi;      // j + 1 er rett sortert plass
+            // en og en verdi flyttes inntil rett sortert plass er funnet
+            for (; j >= 0 && c.compare(temp,a[j]) < 0; j--) a[j+1] = a[j];
+
+            a[j+1] = temp;  // temp legges inn på rett plass
+        }
+    } // innsettingssortering
+    public static <T> int maks(T[] a, Comparator<? super T> c)
+    {
+        return maks(a, 0, a.length, c);  // kaller metoden under
+    }
+
+    public static <T> int maks(T[] a, int fra, int til, Comparator<? super T> c)
+    {
+        fratilKontroll(a.length,fra,til);
+
+        if (fra == til) throw new NoSuchElementException
+                ("fra(" + fra + ") = til(" + til + ") - tomt tabellintervall!");
+
+        int m = fra;                // indeks til største verdi
+        T maksverdi = a[fra];       // største verdi
+
+        for (int i = fra + 1; i < til; i++)   // går gjennom intervallet
+        {
+            if (c.compare(a[i],maksverdi) > 0)  // bruker komparatoren
+            {
+                maksverdi = a[i];     // største verdi oppdateres
+                m = i;                // indeks til største verdi oppdateres
+            }
+        }
+        return m;                 // posisjonen til største verdi
+
+    }  // maks
+    // Oppgave 2 a)
+
+    // Utvalgssortering er kodet vha. metodene min() og bytt(). Det betyr at vi må lage en komparator-versjon av min() og en generisk versjon av bytt():
+
+    public static <T> void bytt(T[] a, int i, int j)
+    {
+        T temp = a[i]; a[i] = a[j]; a[j] = temp;
+    }
+
+    public static <T> int min(T[] a, int fra, int til, Comparator<? super T> c)
+    {
+        if (fra < 0 || til > a.length || fra >= til)
+            throw new IllegalArgumentException("Illegalt intervall!");
+
+        int m = fra;           // indeks til minste verdi i a[fra:til>
+        T minverdi = a[fra];   // minste verdi i a[fra:til>
+
+        for (int i = fra + 1; i < til; i++) if (c.compare(a[i], minverdi) < 0)
+        {
+            m = i;               // indeks til minste verdi oppdateres
+            minverdi = a[m];     // minste verdi oppdateres
+        }
+
+        return m;  // posisjonen til minste verdi i a[fra:til>
+    }
+
+    public static <T> int min(T[] a, Comparator<? super T> c)  // bruker hele tabellen
+    {
+        return min(a,0,a.length,c);     // kaller metoden over
+    }
+
+    public static <T> void utvalgssortering(T[] a, Comparator<? super T> c)
+    {
+        for (int i = 0; i < a.length - 1; i++) {
+            int m = min(a, i, a.length, c);
+            bytt(a, i, m);  // to hjelpemetoder
         }
     }
+    public static <T>
+    int binærsøk(T[] a, int fra, int til, T verdi, Comparator<? super T> c)
+    {
+        Tabell.fratilKontroll(a.length,fra,til);  // se Programkode 1.2.3 a)
+        int v = fra, h = til - 1;    // v og h er intervallets endepunkter
+
+        while (v <= h)  // fortsetter så lenge som a[v:h] ikke er tom
+        {
+            int m = (v + h)/2;     // heltallsdivisjon - finner midten
+            T midtverdi = a[m];  // hjelpevariabel for  midtverdien
+
+            int cmp = c.compare(verdi, midtverdi);
+
+            if (cmp > 0) v = m + 1;        // verdi i a[m+1:h]
+            else if (cmp < 0) h = m - 1;   // verdi i a[v:m-1]
+            else return m;                 // funnet
+        }
+
+        return -(v + 1);   // ikke funnet, v er relativt innsettingspunkt
+    }
+
+    public static <T> int binærsøk(T[] a, T verdi, Comparator<? super T> c)
+    {
+        return binærsøk(a,0,a.length,verdi,c);  // bruker metoden over
+    }
+
 
 }
