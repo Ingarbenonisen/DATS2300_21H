@@ -5,6 +5,7 @@ import bjorge.eksempelKlasser.Student;
 import bjorge.structure.Tabell;
 import java.text.Collator;
 import java.util.Arrays;
+import java.util.Locale;
 
 // 1.4.8  Leksikografiske ordninger
 public class H124 {

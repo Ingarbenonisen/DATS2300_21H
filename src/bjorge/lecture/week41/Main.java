@@ -2,6 +2,8 @@ package bjorge.lecture.week41;
 
 public class Main {
     public static void main(String[] args) {
+       /*
+
         // CircularBuffer
         CircularBuffer buffer = new CircularBuffer(6);
         char[] values = "ABCDEFGHIJKLMNOPQRST".toCharArray();
@@ -20,7 +22,9 @@ public class Main {
             System.out.println();
             i = i+7;
         }
+
+        */
+
+        System.out.println(Tirsdag.stackBasedFactorial(4));
     }
-
-
 }
