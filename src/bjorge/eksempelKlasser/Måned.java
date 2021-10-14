@@ -2,7 +2,7 @@ package bjorge.eksempelKlasser;
 
 import java.util.Arrays;
 
-public enum Maaned {
+public enum Måned {
     JAN (1, "januar"),
     FEB (2, "februar"),
     MAR (3, "mars"),
@@ -19,12 +19,12 @@ public enum Maaned {
     private final int mndnr;
     private final String fulltnavn;
 
-    Maaned(int mndnr, String fulltnavn) {
+    Måned(int mndnr, String fulltnavn) {
         this.mndnr = mndnr;
         this.fulltnavn = fulltnavn;
     }
 
-    public int getMndnr() {
+    public int mndnr() {
         return mndnr;
     }
 
@@ -39,23 +39,23 @@ public enum Maaned {
         return values()[mnd - 1].toString();
     }
 
-    public static Maaned[] vaar()
+    public static Måned[] vaar()
     {
         return Arrays.copyOfRange(values(),3,5);
     }
 
-    public static Maaned[] sommer()
+    public static Måned[] sommer()
     {
         return Arrays.copyOfRange(values(),5,8);
     }
 
-    public static Maaned[] haust()
+    public static Måned[] haust()
     {
         return Arrays.copyOfRange(values(),8,10);
     }
 
-    public static Maaned[] vinter()
+    public static Måned[] vinter()
     {
-        return new Maaned[] { NOV, DES, JAN, FEB, MAR };
+        return new Måned[] { NOV, DES, JAN, FEB, MAR };
     }
 }
