@@ -1,4 +1,4 @@
-package bjorge.models;
+package bjorge.eksempelKlasser;
 ////////////////// grensesnitt Beholder  //////////////////////////////
 
 import java.util.Iterator;

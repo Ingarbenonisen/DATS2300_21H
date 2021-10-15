@@ -1,5 +1,7 @@
-package bjorge.models;
+package bjorge.eksempelKlasser;
 ////////////////// grensesnitt Liste  //////////////////////////////
+
+import bjorge.eksempelKlasser.Beholder;
 
 import java.util.Iterator;
 

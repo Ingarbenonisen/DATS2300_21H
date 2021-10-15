@@ -1,8 +1,9 @@
 
-package bjorge.models;
+package bjorge.eksempelKlasser;
+
+import bjorge.eksempelKlasser.Liste;
 
 import java.util.Iterator;
-import java.util.Objects;
 //Kommet til 3.3.2.f)
 
 public class EnkeltLenketListe<T> implements Liste<T>
