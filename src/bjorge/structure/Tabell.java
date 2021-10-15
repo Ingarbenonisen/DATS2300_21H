@@ -845,10 +845,26 @@ public class Tabell     // Samleklasse for tabellmetoder
     }
 
     // 1.5
+
+    // Rekursiv versjon
+    /*
     public static int tverrsum(int n)              // n må være >= 0
     {
         if (n < 10) return n;                        // kun ett siffer
         else return tverrsum(n / 10) + (n % 10);     // metoden kalles
+    }
+
+     */
+    // Iterativ versjon
+    public static int tverrsum(int n)
+    {
+        if (n < 10) return n;                        // kun ett siffer
+        int sum = 0;
+        while (n > 10) {
+            sum += n%10;
+            n = n/10;
+        }
+        return sum + n;
     }
 
     public static int euklid(int a, int b)
@@ -863,5 +879,29 @@ public class Tabell     // Samleklasse for tabellmetoder
         if (n == 1) return 1;            // summen av 1 er lik 1
         return sum(n - 1) + n;           // summen av de  n – 1 første + n
     }
+    public static int sum(int[] a, int n)   // summen av de n første
+    {
+        if (n == 1) return a[0];       // summen er verdien selv
+        return sum(a,n-1) + a[n-1];    // summen av de n-1 første + a[n-1]
+    }
+    public static int sum(int[] a, int v, int h)   // intervallet a[v:h]
+    {
+        if (v == h) return a[v];   // summen av én verdi er verdien selv
+        int m = (v + h)/2;         // finner midten
+        return sum(a,v,m) + sum(a,m+1,h);  // summen av de to halvdelene
+    }
+    public static int fib(int n)         // det n-te Fibonacci-tallet
+    {
+        if (n <= 1) return n;              // fib(0) = 0, fib(1) = 1
+        else return fib(n-1) + fib(n-2);   // summen av de to foregående
+    }
+
+    public static int sifferrot(int n)
+    {
+        n %= 9;
+        return n == 0 ? 9 : n;
+    }
+
+
 
 }
