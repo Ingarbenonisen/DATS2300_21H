@@ -1,7 +1,9 @@
 package bjorge.eksempelKlasser;
 
+import java.util.Comparator;
+
 @FunctionalInterface
-public interface Komparator<T>      // et funksjonsgrensesnitt
+public interface Komparator<T> extends Comparator<T>      // et funksjonsgrensesnitt
 {
     int compare(T o1, T o2);          // en abstrakt metode
 

@@ -795,20 +795,25 @@ public class Tabell     // Samleklasse for tabellmetoder
         return sParter(a,0,a.length-1,k,c); // v = 0 og h = a.lenght-1
     }
 
-    private static <T>
+    public static <T>
     void kvikksortering(T[] a, int v, int h, Comparator<? super T> c)
     {
+        System.out.println("Kallet med [" + v + ":" + h + "] starter!");
         if (v >= h) return;  // hvis v = h er a[v:h] allerede sortert
 
         int p = sParter(a,v,h,(v + h)/2,c);
-        kvikksortering(a,v,p-1,c);
-        kvikksortering(a,p+1,h,c);
+
+        if (v < p - 1) kvikksortering(a,v,p-1,c);
+        if (p + 1 < h) kvikksortering(a,p+1,h,c);
+
+        System.out.println("Kallet med [" + v + ":" + h + "] er ferdig!");
+
     }
 
     public static <T>
     void kvikksortering(T[] a, Comparator<? super T> c) // sorterer hele tabellen
     {
-        kvikksortering(a, 0, a.length - 1, c);
+        if (a.length > 1) kvikksortering(a, 0, a.length - 1, c);
     }
 
     private static <T>
@@ -867,40 +872,8 @@ public class Tabell     // Samleklasse for tabellmetoder
         return sum + n;
     }
 
-    public static int euklid(int a, int b)
-    {
 
-        if (b == 0) return a;
-        int r = a % b;            // r er resten
-        return euklid(b,r);       // rekursivt kall
-    }
-    public static int sum(int n)       // summen av tallene fra 1 til n
-    {
-        if (n == 1) return 1;            // summen av 1 er lik 1
-        return sum(n - 1) + n;           // summen av de  n – 1 første + n
-    }
-    public static int sum(int[] a, int n)   // summen av de n første
-    {
-        if (n == 1) return a[0];       // summen er verdien selv
-        return sum(a,n-1) + a[n-1];    // summen av de n-1 første + a[n-1]
-    }
-    public static int sum(int[] a, int v, int h)   // intervallet a[v:h]
-    {
-        if (v == h) return a[v];   // summen av én verdi er verdien selv
-        int m = (v + h)/2;         // finner midten
-        return sum(a,v,m) + sum(a,m+1,h);  // summen av de to halvdelene
-    }
-    public static int fib(int n)         // det n-te Fibonacci-tallet
-    {
-        if (n <= 1) return n;              // fib(0) = 0, fib(1) = 1
-        else return fib(n-1) + fib(n-2);   // summen av de to foregående
-    }
-
-    public static int sifferrot(int n)
-    {
-        n %= 9;
-        return n == 0 ? 9 : n;
-    }
+    // 1.5.2  Hva skjer når en rekursiv metode kjøres?
 
 
 
