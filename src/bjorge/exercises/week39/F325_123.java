@@ -34,7 +34,7 @@ public class F325_123 {
         Iterator<String> j = liste.iterator();     // oppretter en iterator j
 
         System.out.println(i.next());              // den første i listen
-        i.remove();                                // fjerner den første
+        //i.remove();                              // fjerner den første
         System.out.println(j.next());              // den første i listen
 
     }
