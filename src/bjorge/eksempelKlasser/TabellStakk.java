@@ -97,7 +97,7 @@ public void leggInn(T verdi)
     }
     //Oppgave 4
 
-    public static  void kopier(Stakk<T> A, Stakk<T> B)
+    public static <T> void kopier(Stakk<T> A, Stakk<T> B)
     {
         Stakk<T> C = new TabellStakk<T>();
         while (!A.tom()) C.leggInn(A.taUt());
@@ -109,6 +109,26 @@ public void leggInn(T verdi)
         }
     }
 
+    // sorterer slik at den minste kommer øverst på stakken
 
+    public static <T> void sorter(Stakk<T> A, Comparator<T> c)
+    {
+        Stakk<T> B = new TabellStakk<T>();
+        T temp; int n = 0;
+
+        while (!A.tom())
+        {
+            temp = A.taUt();
+            n = 0;
+            while (!B.tom() && c.compare(temp,B.kikk()) < 0)
+            {
+                n++; A.leggInn(B.taUt());
+            }
+            B.leggInn(temp);
+            for (int i = 0; i < n; i++) B.leggInn(A.taUt());
+        }
+
+        while (!B.tom()) A.leggInn(B.taUt());
+    }
 
 } // class TabellSTakk
