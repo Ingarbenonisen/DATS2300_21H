@@ -52,7 +52,7 @@ public class D516_1345810 {
 
         String verdier = s.toString();
         System.out.println(verdier);                    // skriver ut listen
-        */
+
         // Oppgave 5
         BinTre<Character> tre5 = new BinTre<>();             // et tomt tre
 
@@ -69,7 +69,36 @@ public class D516_1345810 {
 
         String verdier5 = s5.toString();
         System.out.println(verdier5);                    // skriver ut listen
+*/
         // Oppgave 8
+        // Oppgave 10
+        int[] posisjon = {1,2,3,4,5,6,7,10,11,13,14,22,23,28,29};  // nodeposisjoner
+        String[] verdi = "EIBGAHKLODNMCJF".split("");              // verdier i nivåorden
+
+        BinTre<String> tre = new BinTre<>(posisjon, verdi);        // en konstruktør
+
+        int[] nivåer = tre.nivåer();  // bruker Programkode 5.1.6 k)
+
+        System.out.print("Nivåer: " + Arrays.toString(nivåer));
+        System.out.print(" Treets bredde: " + nivåer[Tabell.maks(nivåer)]);
+        System.out.println(" Treets høyde: " + (nivåer.length - 1));
+        // Utskrift: Nivåer: [1, 2, 4, 4, 4] Treets bredde: 4 Treets høyde: 4
+
+        BinTre<Character> tre10 = new BinTre<>();    //et tomt tre
+
+        int[] p = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,17,18,19,21,23,26,27,29};
+        for (int i = 0; i < p.length; i++) tre10.leggInn(p[i],(char)('A' + i));
+
+        int[] nivåer10 = tre10.nivåer();
+
+        System.out.println(Arrays.toString(nivåer10));
+        System.out.println("Treets bredde: " + nivåer10[Tabell.maks(nivåer10)]);
+        System.out.println("Treets høyde: " + (nivåer.length - 1));
+
+        // Utskrift:
+        // [1, 2, 4, 7, 8]
+        // Treets bredde: 8
+        // Treets høyde: 4
 
     }
 }

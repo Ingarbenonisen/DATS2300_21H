@@ -5,6 +5,9 @@ import bjorge.eksempelKlasser.Oppgave;
 import bjorge.eksempelKlasser.TabellKø;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
+import java.util.StringJoiner;
+import java.util.function.ObjIntConsumer;
 
 public class BinTre<T>           // et generisk binærtre
 {
@@ -204,6 +207,119 @@ public class BinTre<T>           // et generisk binærtre
         }
 
         return Arrays.copyOf(a, nivå);  // fjerner det overflødige
+    }
+
+
+    // 5.1.7
+
+    // V1 - er mest effektiv
+    private static <T> void preorden(Node<T> p, Oppgave<? super T> oppgave)
+    {
+        oppgave.utførOppgave(p.verdi);                       // utfører oppgaven
+
+        if (p.venstre != null) preorden(p.venstre,oppgave);  // til venstre barn
+        if (p.høyre != null) preorden(p.høyre,oppgave);      // til høyre barn
+    }
+
+    public void preorden(Oppgave<? super T> oppgave)
+    {
+        if (!tom()) preorden(rot,oppgave);  // sjekker om treet er tomt
+    }
+
+    // V2
+    /*
+    private static <T> void preorden(Node<T> p, Oppgave<? super T> oppgave)
+    {
+        if (p != null)  // metoden returnerer hvis p == null
+        {
+            oppgave.utførOppgave(p.verdi);
+
+            preorden(p.venstre,oppgave);
+            preorden(p.høyre,oppgave);
+        }
+    }
+
+    public void preorden(Oppgave <? super T> oppgave)
+    {
+        preorden(rot,oppgave);
+    }
+
+     */
+
+    private static <T> void inorden(Node<T> p, Oppgave<? super T> oppgave)
+    {
+        if (p.venstre != null) inorden(p.venstre,oppgave);
+        oppgave.utførOppgave(p.verdi);
+        if (p.høyre != null) inorden(p.høyre,oppgave);
+    }
+
+    public void inorden(Oppgave <? super T> oppgave)
+    {
+        if (!tom()) inorden(rot,oppgave);
+    }
+
+    public String toString()
+    {
+        StringJoiner s = new StringJoiner(", ", "[", "]");
+        if (!tom()) inorden(x -> s.add(x != null ? x.toString() : "null"));
+        return s.toString();
+    }
+
+    public T førstInorden()
+    {
+        if (tom()) throw new NoSuchElementException("Treet er tomt!");
+
+        Node<T> p = rot;
+        while (p.venstre != null) p = p.venstre;
+
+        return p.verdi;
+    }
+
+    public T førstPostorden()
+    {
+        if (tom()) throw new NoSuchElementException("Treet er tomt!");
+
+        Node<T> p = rot;
+        while (true)
+        {
+            if (p.venstre != null) p = p.venstre;
+            else if (p.høyre != null) p = p.høyre;
+            else return p.verdi;
+        }
+    }
+
+    private static
+    <T> Node<T> trePreorden(T[] preorden, int rot, T[] inorden, int v, int h)
+    {
+        if (v > h) return null;  // tomt intervall -> tomt tre
+        int k = v; T verdi = preorden[rot];
+        while (!verdi.equals(inorden[k])) k++;  // finner verdi i inorden[v:h]
+
+        Node<T> venstre = trePreorden(preorden, rot + 1, inorden, v, k - 1);
+        Node<T> høyre   = trePreorden(preorden, rot + 1 + k - v, inorden, k + 1, h);
+
+        return new Node<>(verdi, venstre, høyre);
+    }
+    public static <T> BinTre<T> trePreorden(T[] preorden, T[] inorden)
+    {
+        BinTre<T> tre = new BinTre<>();
+        tre.rot = trePreorden(preorden, 0, inorden, 0, inorden.length - 1);
+
+        tre.antall = preorden.length;
+        return tre;
+    }
+
+    private static <T> void
+    preorden(Node<T> p, int k, ObjIntConsumer<? super T> oppgave)
+    {
+        oppgave.accept(p.verdi, k);
+        if (p.venstre != null) preorden(p.venstre, 2*k, oppgave);
+        if (p.høyre != null) preorden(p.høyre, 2*k + 1, oppgave);
+    }
+
+    public void preorden(ObjIntConsumer<? super T> oppgave)
+    {
+        if (!tom()) preorden(rot, 1, oppgave);  // roten har posisjon 1
     }
 
 
