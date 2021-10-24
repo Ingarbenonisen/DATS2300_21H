@@ -322,6 +322,41 @@ public class BinTre<T>           // et generisk binærtre
         if (!tom()) preorden(rot, 1, oppgave);  // roten har posisjon 1
     }
 
+    // Oppgave 7
+    private static <T> void postorden(Node<T> p, Oppgave<? super T> oppgave)
+    {
+        if (p.venstre != null) postorden(p.venstre,oppgave);
+        if (p.høyre != null) postorden(p.høyre,oppgave);
+        oppgave.utførOppgave(p.verdi);
+    }
+
+    public void postorden(Oppgave<? super T> oppgave)
+    {
+        if (rot != null) postorden(rot,oppgave);
+    }
+
+    // Oppgave 8
+    public void nullstill()
+    {
+        if (!tom()) nullstill(rot);  // nullstiller
+        rot = null; antall = 0;      // treet er nå tomt
+    }
+
+    private void nullstill(Node<T> p)
+    {
+        if (p.venstre != null)
+        {
+            nullstill(p.venstre);      // venstre subtre
+            p.venstre = null;          // nuller peker
+        }
+        if (p.høyre != null)
+        {
+            nullstill(p.høyre);        // høyre subtre
+            p.høyre = null;            // nuller peker
+        }
+        p.verdi = null;              // nuller verdien
+    }
+
 
 
 } // class BinTre<T>

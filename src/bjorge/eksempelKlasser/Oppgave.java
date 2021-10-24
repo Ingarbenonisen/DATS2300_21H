@@ -14,4 +14,9 @@ public interface Oppgave<T>  // legges under hjelpeklasser
     {
         return t -> { utførOppgave(t); oppgave.utførOppgave(t); };
     }
+
+    public static <T> Oppgave<T> konsollutskrift(String format)
+    {
+        return t -> System.out.printf(format, t);
+    }
 }
