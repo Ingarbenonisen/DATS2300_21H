@@ -2,6 +2,7 @@
 package bjorge.eksempelKlasser;
 
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -53,6 +54,27 @@ public class SBinTre<T> // implements Beholder<T>
         return sbintre(s, Comparator.naturalOrder());  // naturlig ordning
     }
 
+    public static <T extends Comparable<? super T>> SBinTre<T> naturligOrdenTre()
+    {
+        return new SBinTre<>(Comparator.naturalOrder());
+    }
+
+    public static <T> SBinTre<T> komparatorTre(Comparator<? super T> c)
+    {
+        return new SBinTre<>(c);
+    }
+
+    public static <T> SBinTre<T> komparatorTre(T[] a, Comparator<? super T> c)
+    {
+        SBinTre<T> tre = new SBinTre<>(c);          // komparatoren c
+        for (T verdi : a) tre.leggInn(verdi);       // bygger opp treet
+        return tre;                                 // treet returneres
+    }
+
+    public static <T extends Comparable<? super T>> SBinTre<T> naturligOrdenTre(T[] a)
+    {
+        return komparatorTre(a, Comparator.naturalOrder());  // naturlig ordning
+    }
 
     public final boolean leggInn(T verdi)    // skal ligge i class SBinTre
     {
@@ -105,5 +127,63 @@ public class SBinTre<T> // implements Beholder<T>
     public int høyde()
     {
         return høyde(rot);                 // kaller hjelpemetoden
+    }
+
+    public String toString()                   // hører til SBinTre
+    {
+        StringBuilder s = new StringBuilder();   // StringBuilder
+        s.append('[');                           // starter med [
+        if (!tom()) toString(rot,s);             // den rekursive metoden
+        s.append(']');                           // avslutter med ]
+        return s.toString();                     // returnerer
+    }
+
+    private static <T> void toString(Node<T> p, StringBuilder s)
+    {
+        if (p.venstre != null)                   // p har et venstre subtre
+        {
+            toString(p.venstre, s);                // komma og mellomrom etter
+            s.append(',').append(' ');             // den siste i det venstre
+        }                                        // subtreet til p
+
+        s.append(p.verdi);                       // verdien i p
+
+        if (p.høyre != null)                     // p har et høyre subtre
+        {
+            s.append(',').append(' ');             // komma og mellomrom etter
+            toString(p.høyre, s);                  // p siden p ikke er den
+        }                                        // siste noden i inorden
+    }
+
+    public boolean inneholder(T verdi)          // ny versjon
+    {
+        if (verdi == null) return false;          // treet har ikke nullverdier
+
+        Node<T> p = rot;                          // starter i roten
+        Node<T> q = null;                         // hjelperefranse
+
+        while (p != null)                         // sjekker p
+        {
+            if (comp.compare(verdi, p.verdi) < 0)   // sammenligner
+            {
+                p = p.venstre;                        // går til venstre
+            }
+            else
+            {
+                q = p;                                // oppdaterer q
+                p = p.høyre;                          // går til høyre
+            }
+        }
+
+        return q == null ? false : comp.compare(verdi,q.verdi) == 0;
+    }
+
+    public T min()                 // skal returnere treets minste verdi
+    {
+        if (tom()) throw new NoSuchElementException("Treet er tomt!");
+
+        Node<T> p = rot;                            // starter i roten
+        while (p.venstre != null) p = p.venstre;    // går mot venstre
+        return p.verdi;                             // den minste verdien
     }
 } // class SBinTre 
