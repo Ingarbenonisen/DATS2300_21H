@@ -178,6 +178,8 @@ public class SBinTre<T> // implements Beholder<T>
         return q == null ? false : comp.compare(verdi,q.verdi) == 0;
     }
 
+    // 5.2.7 Min, maks, gulv, tk, mindre, større
+
     public T min()                 // skal returnere treets minste verdi
     {
         if (tom()) throw new NoSuchElementException("Treet er tomt!");
@@ -185,5 +187,65 @@ public class SBinTre<T> // implements Beholder<T>
         Node<T> p = rot;                            // starter i roten
         while (p.venstre != null) p = p.venstre;    // går mot venstre
         return p.verdi;                             // den minste verdien
+    }
+    public T gulv(T verdi)
+    {
+        Objects.requireNonNull(verdi, "Treet har ingen nullverdier!");
+        if (tom()) throw new NoSuchElementException("Treet er tomt!");
+
+        Node<T> p = rot; T gulv = null;
+
+        while (p != null)
+        {
+            int cmp = comp.compare(verdi, p.verdi);
+
+            if (cmp < 0) p = p.venstre;  // gulvet ligger til venstre
+            else if (cmp > 0)
+            {
+                gulv = p.verdi;            // nodeverdien er en kandidat
+                p = p.høyre;
+            }
+            else return p.verdi;         // verdi ligger i treet
+        }
+        return gulv;
+    }
+    public T større(T verdi)
+    {
+        if (tom()) throw new NoSuchElementException("Treet er tomt!");
+        if (verdi == null) throw new NullPointerException("Ulovlig nullverdi!");
+
+        Node<T> p = rot;
+        T større = null;
+
+        while (p != null)
+        {
+            int cmp = comp.compare(verdi, p.verdi);
+
+            if (cmp < 0)
+            {
+                større = p.verdi;  // en kandidat
+                p = p.venstre;
+            }
+            else                 // den må ligge til høyre
+            {
+                p = p.høyre;
+            }
+        }
+
+        return større;
+    }
+    // 5.2.7
+    // Oppgave 1 og 2
+    public T maks()                 // skal returnere treets minste verdi
+    {
+        if (tom()) throw new NoSuchElementException("Treet er tomt!");
+
+        Node<T> p = rot; // starter i roten
+        Node<T> q = rot;
+        while (p.høyre != null) {
+            p = p.høyre;    // går mot høgre
+            if (comp.compare(p.verdi,q.verdi) > 0) q = p;
+        }
+            return q.verdi;                             // den største verdien
     }
 } // class SBinTre 
