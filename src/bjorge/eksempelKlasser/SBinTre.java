@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 public class SBinTre<T> // implements Beholder<T>
 {
+
     private static final class Node<T> // en indre nodeklasse
     {
         private T verdi;                 // nodens verdi
@@ -22,6 +23,7 @@ public class SBinTre<T> // implements Beholder<T>
         {
             this(verdi, null, null);
         }
+
     } // class Node
 
     private Node<T> rot;                       // peker til rotnoden
@@ -75,6 +77,7 @@ public class SBinTre<T> // implements Beholder<T>
     {
         return komparatorTre(a, Comparator.naturalOrder());  // naturlig ordning
     }
+
 
     public final boolean leggInn(T verdi)    // skal ligge i class SBinTre
     {
@@ -178,6 +181,35 @@ public class SBinTre<T> // implements Beholder<T>
         return q == null ? false : comp.compare(verdi,q.verdi) == 0;
     }
 
+    // 5.2.5 Fra ordnet tabell til binært søketre
+    private static <T> Node<T> balansert(T[] a, int v, int h)  // en rekursiv metode
+    {
+        if (v > h) return null;                       // tomt intervall -> tomt tre
+
+        int m = (v + h)/2;                            // midten
+        T verdi = a[m];                               // midtverdien
+
+        while (v < m && verdi.equals(a[m-1])) m--;    // til venstre
+
+        Node<T> p = balansert(a, v, m - 1);           // venstre subtre
+        Node<T> q = balansert(a, m + 1, h);           // høyre subtre
+
+        return new Node<>(verdi, p, q);               // rotnoden
+    }
+
+    public static <T> SBinTre<T> balansert(T[] a, Comparator<? super T> c)
+    {
+        SBinTre<T> tre = new SBinTre<>(c);          // oppretter et tomt tre
+        tre.rot = balansert(a, 0, a.length - 1);    // bruker den rekursive metoden
+        tre.antall = a.length;                      // setter antallet
+        return tre;                                 // returnerer treet
+    }
+
+    public static <T extends Comparable<? super T>> SBinTre<T> balansert(T[] a)
+    {
+        return balansert(a, Comparator.naturalOrder());
+    }
+
     // 5.2.7 Min, maks, gulv, tk, mindre, større
 
     public T min()                 // skal returnere treets minste verdi
@@ -188,6 +220,7 @@ public class SBinTre<T> // implements Beholder<T>
         while (p.venstre != null) p = p.venstre;    // går mot venstre
         return p.verdi;                             // den minste verdien
     }
+    // Skrivd selv, skal skrive ute den siste gulv verdien, er det riktig?
     public T gulv(T verdi)
     {
         Objects.requireNonNull(verdi, "Treet har ingen nullverdier!");
@@ -205,10 +238,38 @@ public class SBinTre<T> // implements Beholder<T>
                 gulv = p.verdi;            // nodeverdien er en kandidat
                 p = p.høyre;
             }
-            else return p.verdi;         // verdi ligger i treet
+            else if (gulv == p.verdi){
+                gulv = p.verdi;
+            }
+            else {         // verdi ligger i treet
+                return p.verdi;
+            }
         }
         return gulv;
     }
+    // Den fra kompendiet
+    public T gulv2(T verdi)
+    {
+        if (tom()) throw new NoSuchElementException("Treet er tomt!");
+
+        Node<T> p = rot;
+        T gulv = null;
+
+        while (p != null)
+        {
+            int cmp = comp.compare(verdi, p.verdi);
+
+            if (cmp < 0) p = p.venstre;  // gulv(verdi) ligger til venstre
+            else
+            {
+                gulv = p.verdi;            // nodeverdien er en kandidat
+                p = p.høyre;
+            }
+        }
+
+        return gulv;
+    }
+
     public T større(T verdi)
     {
         if (tom()) throw new NoSuchElementException("Treet er tomt!");
@@ -248,4 +309,62 @@ public class SBinTre<T> // implements Beholder<T>
         }
             return q.verdi;                             // den største verdien
     }
+    // Oppgave 5
+    public T tak(T verdi)
+    {
+        if (tom())
+        {
+            throw new NoSuchElementException("Treet er tomt!");
+        }
+
+        Node<T> p = rot;
+        T tak = null;
+
+        while (p != null)
+        {
+            int cmp = comp.compare(verdi, p.verdi);
+
+            if (cmp < 0)
+            {
+                tak = p.verdi;
+                p = p.venstre;
+            }
+            else if (cmp > 0)
+            {
+                p = p.høyre;
+            }
+            else
+            {
+                return p.verdi;
+            }
+        }
+
+        return tak;
+    }
+    // Oppgave 6
+    public T mindre(T verdi)
+    {
+        if (tom()) throw new NoSuchElementException("Treet er tomt!");
+
+        Node<T> p = rot;
+        T mindre = null;
+
+        while (p != null)
+        {
+            int cmp = comp.compare(verdi, p.verdi);
+
+            if (cmp <= 0)
+            {
+                p = p.venstre;
+            }
+            else
+            {
+                mindre = p.verdi;
+                p = p.høyre;
+            }
+        }
+
+        return mindre;
+    }
+
 } // class SBinTre 

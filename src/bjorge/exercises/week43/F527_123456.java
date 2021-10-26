@@ -8,8 +8,16 @@ import java.util.stream.Stream;
 public class F527_123456 {
   public static void main(String[] args) {
         // Oppgave 3
-        Integer[] verdi = {1, 3, 5, 7 ,7, 4, 2, 4, 1};
+        Integer[] verdi = {1, 5, 7, 10, 15,7};
         SBinTre<Integer> tre = SBinTre.sbintre(Stream.of(verdi));
-        System.out.println(tre.gulv(6));
+        System.out.println(tre);
+        int verdiTall = 6;
+        System.out.println(tre.gulv(verdiTall));
+        // Oppgave 4
+        System.out.println(tre.gulv2(verdiTall));
+        if (tre.gulv(verdiTall).equals(tre.gulv2(verdiTall))){
+        System.out.println(true);
+        }
+
   }
 }

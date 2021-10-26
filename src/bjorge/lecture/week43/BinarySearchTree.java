@@ -78,7 +78,7 @@ public class BinarySearchTree {
             }
             return p;
         }
-
+        /* Error i koden
         void insert(int value){
             // Treet vårt er tomt
             if (root == null){
@@ -109,9 +109,12 @@ public class BinarySearchTree {
             }
 
         }
-    } // class BST
 
+         */
+    } // class BST
+/*
     public static void main(String[] args) {
+
         BST tree = new BST();
         int[] values = {9, 7, 1, 3, 5, 11, 13, 10, 8};
 
@@ -123,5 +126,8 @@ public class BinarySearchTree {
 
 
     }
+
+ */
+
 
 }
